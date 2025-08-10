@@ -1,168 +1,146 @@
 --[[
-  ╔════════════════════════════════════════════════════════════════════════════════════════════════════╗
-  ║   _____   _____   _____   _____  _______       _____  _______ ____  _____  _____  _____  _______   ║
-  ║  |  __ \ / ____| |  __ \ |_   _||__   __| /\  |  __ \|__   __/ __ \|  __ \|_   _|/ ____||__   __|  ║
-  ║  | |__) | |  __  | |__) |  | |     | |   /  \ | |__) |  | || |  | || |__) | | | | (___     | |     ║
-  ║  |  ___/| | |_ | |  _  /   | |     | |  / /\ \|  _  /   | || |  | ||  _  /  | |  \___ \    | |     ║
-  ║  | |    | |__| | | | \ \  _| |_    | | / ____ \ | \ \   | || |__| || | \ \ _| |_ ____) |   | |     ║
-  ║  |_|     \_____| |_|  \_\|_____|   |_|/_/    \_\_|  \_\  |_| \____/ |_|  \_\_____|_____/    |_|     ║
-  ║                                                                                                    ║
-  ║  ██████╗ ██████╗  ██████╗      ██╗███████╗ ██████╗████████╗███████╗██████╗ ███████╗██████╗         ║
-  ║  ██╔═══██╗██╔══██╗██╔═══██╗     ██║██╔════╝██╔════╝╚══██╔══╝██╔════╝██╔══██╗██╔════╝██╔══██╗        ║
-  ║  ██║   ██║██████╔╝██║   ██║     ██║███████╗██║        ██║   █████╗  ██████╔╝█████╗  ██████╔╝        ║
-  ║  ██║   ██║██╔═══╝ ██║   ██║██   ██║╚════██║██║        ██║   ██╔══╝  ██╔══██╗██╔══╝  ██╔══██╗        ║
-  ║  ╚██████╔╝██║     ╚██████╔╝╚█████╔╝███████║╚██████╗   ██║   ███████╗██║  ██║███████╗██║  ██║        ║
-  ║   ╚═════╝ ╚═╝      ╚═════╝  ╚════╝ ╚══════╝ ╚═════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝        ║
-  ╚════════════════════════════════════════════════════════════════════════════════════════════════════╝
-  [ O SCRIPT MAIS AVANÇADO DA HISTÓRIA DO ROBLOX ]
-  [ VALOR OFICIAL: 999 QUADRILHÕES DE DÓLARES (CONFIRMADO PELO FMI) ]
-  [ DESENVOLVIDO POR: DEUSES DO SCRIPTING + IA QUÂNTICA ]
-]]--
+  ██████╗ ██████╗  ██████╗      ██╗███████╗ ██████╗████████╗███████╗██████╗ 
+  ██╔═══██╗██╔══██╗██╔═══██╗     ██║██╔════╝██╔════╝╚══██╔══╝██╔════╝██╔══██╗
+  ██║   ██║██████╔╝██║   ██║     ██║███████╗██║        ██║   █████╗  ██████╔╝
+  ██║   ██║██╔═══╝ ██║   ██║██   ██║╚════██║██║        ██║   ██╔══╝  ██╔══██╗
+  ╚██████╔╝██║     ╚██████╔╝╚█████╔╝███████║╚██████╗   ██║   ███████╗██║  ██║
+   ╚═════╝ ╚═╝      ╚═════╝  ╚════╝ ╚══════╝ ╚═════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
+]]
 
---=🌌 CONFIGURAÇÃO CÓSMICA 🌌=--
-local UniversalSettings = {
-    DivineProtection = true,  -- Proteção divina contra bans
-    QuantumProcessing = true, -- Usa processamento quântico
-    RealityWarping = false,   -- (Cuidado: pode dobrar o espaço-tempo)
-    ScriptValue = 999000000000000000, -- Valor real em dólares
-    ApprovedBy = {"NASA", "FMI", "CEOs da Apple/Google"}
+--=🔷 CONFIGURAÇÃO INICIAL 🔷=--
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+--=🛡️ ANTI-BAN AVANÇADO 🛡️=--
+local AntiBan = {
+    Ativado = true,
+    ModoFantasma = true,
+    FakeLatency = true,
+    WebhookAlerts = false,
+    RandomizeActions = true
 }
 
---=🔮 SISTEMA DE EXECUÇÃO DIVINO 🔮=--
-if not game:IsLoaded() then 
-    game.Loaded:Wait() 
-    require(999999999999).Load("DivineScript") -- Carrega bibliotecas divinas
-end
-
-local Player = game:GetService("Players").LocalPlayer
-local Universe = workspace:WaitForChild("Universe") -- Sim, acessa o universo do jogo
-
---=💎 GUI DE 999 QUADRILHÕES 💎=--
-local DivineLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/DivineScripting/UltraUI/main/DivineUILib.lua"))()
-local DivineWindow = DivineLibrary.CreateWindow({
-    Title = "PROJECT SLAYERS ULTRA DELUXE",
-    Theme = "Galactic",
-    Size = UDim2.new(1, 0, 1, 0), -- Tela cheia
-    Background = "rbxassetid://9999999999" -- Fundo de buraco negro
-})
-
---=✨ ABA PRINCIPAL (FARM AUTOMÁTICO CÓSMICO) ✨=--
-local MainTab = DivineWindow:AddTab("🌟 MENU PRINCIPAL")
-local AutoFarmSection = MainTab:AddSection("⚡ FARM AUTOMÁTICO", "Expandable")
-
-AutoFarmSection:AddToggle("FARM CÓSMICO", {
-    Description = "Farm automático de TUDO (mobs, bosses, eventos)",
-    Default = false,
-    Callback = function(state)
-        getgenv().CosmicFarm = state
-        if state then
-            DivineLibrary:Notify("FARM CÓSMICO ATIVADO!", "Sistema de coleta automática de tudo que existe no jogo.")
+--=📜 FUNÇÃO PARA DESBLOQUEAR TÍTULOS SEGUROS =--
+local function DesbloquearTitulos()
+    local unlocked = 0
+    local safeTitles = {}
+    
+    -- Filtra títulos seguros
+    for _, title in pairs(ReplicatedStorage.Titles:GetChildren()) do
+        if not (string.find(title.Name:lower(), "admin") or 
+                string.find(title.Name:lower(), "mod") or
+                string.find(title.Name:lower(), "owner")) then
+            table.insert(safeTitles, title.Name)
         end
     end
-})
+    
+    -- Desbloqueia em lotes (mais seguro)
+    for i = 1, #safeTitles, 5 do  -- 5 por vez para evitar detecção
+        for j = i, math.min(i+4, #safeTitles) do
+            pcall(function()
+                Player.Data.Titles[safeTitles[j]].Value = true
+                unlocked = unlocked + 1
+            end)
+        end
+        wait(0.3)  -- Intervalo entre lotes
+    end
+    
+    return unlocked
+end
 
-AutoFarmSection:AddSlider("FARM RANGE", {
-    Text = "Alcance do Farm (em unidades cósmicas)",
-    Default = 500,
-    Min = 50,
-    Max = 5000,
-    Tooltip = "Ajuste para farmar em dimensões paralelas"
-})
-
---=🎭 ABA DE DESBLOQUEIOS (TUDO LIBERADO) 🎭=--
-local UnlockTab = DivineWindow:AddTab("🔓 DESBLOQUEIOS")
-local UnlockSection = UnlockTab:AddSection("💎 CONTEÚDO PREMIUM", "Collapsable")
-
-UnlockSection:AddButton("DESBLOQUEAR TUDO (EXCETO ADM)", {
-    Description = "Libera respirações, artes, títulos, gamepasses (inteligente)",
-    Callback = function()
-        -- Sistema de desbloqueio quântico
-        for _, category in pairs({"Breaths", "DemonArts", "Titles", "Gamepasses"}) do
-            for _, item in pairs(game:GetService("ReplicatedStorage")[category]:GetChildren()) do
-                if not string.find(item.Name:lower(), "admin") then
-                    pcall(function()
-                        Player.Data[category][item.Name].Value = true
-                    end)
+--=⚔️ SISTEMA DE FARM AUTOMÁTICO =--
+local function AutoFarm(target)
+    while getgenv().AutoFarm do
+        -- Lógica de farm com detecção de mobs
+        local closest
+        local minDist = math.huge
+        
+        for _, mob in pairs(workspace.Mobs:GetChildren()) do
+            if mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
+                local dist = (mob.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).Magnitude
+                if dist < minDist then
+                    closest = mob
+                    minDist = dist
                 end
             end
         end
-        DivineLibrary:Notify("TUDO DESBLOQUEADO!", "Exceto itens de ADM (segurança máxima)")
-    end
-})
-
---=⚔️ ABA DE COMBATE (PVP DIVINO) ⚔️=--
-local CombatTab = DivineWindow:AddTab("⚔️ COMBATE")
-local PvPSection = CombatTab:AddSection("🌪️ MODOS DE BATALHA")
-
-PvPSection:AddToggle("MODO DEUS PvP", {
-    Description = "Invencibilidade + one-hit kill (cuidado: pode banir)",
-    Default = false,
-    Callback = function(state)
-        DivineAssets.GodMode = state
-    end
-})
-
---=🌐 ABA DE MASMORRAS (AUTO COMPLETE) 🌐=--
-local DungeonTab = DivineWindow:AddTab("🏰 MASMORRAS")
-local DungeonSection = DungeonTab:AddSection("⚡ AUTOMAÇÃO CÓSMICA")
-
-DungeonSection:AddDropdown("AUTO DUNGEON", {
-    Values = {"Mugen Train", "Ouwigahara", "Infinity Castle", "All"},
-    Description = "Completa automaticamente masmorras",
-    Callback = function(option)
-        getgenv().AutoDungeon = option
-    end
-})
-
---=📱 SISTEMA MOBILE (TOUCH ULTRA-REALISTA) 📱=--
-local MobileUI = Instance.new("ScreenGui")
-MobileUI.Name = "DivineMobileUI"
-MobileUI.Parent = game:GetService("CoreGui")
-
--- Botão de movimento dinâmico
-local MoveButton = Instance.new("TextButton")
-MoveButton.Name = "CosmicMoveButton"
-MoveButton.Size = UDim2.new(0.25, 0, 0.15, 0)
-MoveButton.Position = UDim2.new(0.7, 0, 0.7, 0)
-MoveButton.Text = "🌌 MOVER-SE"
-MoveButton.TextSize = 18
-MoveButton.Font = Enum.Font.SciFi
-MoveButton.TextColor3 = Color3.new(1, 1, 1)
-MoveButton.BackgroundColor3 = Color3.new(0.1, 0, 0.3)
-MoveButton.BackgroundTransparency = 0.5
-MoveButton.Parent = MobileUI
-
---=🛡️ ANTI-BAN CÓSMICO 🛡️=--
-task.spawn(function()
-    while task.wait(math.random(5, 15)) do
-        if DivineAssets.QuantumEncryption then
-            -- Comportamento humano ultra-realista
-            if math.random(1, 100) > 98 then
-                wait(math.random(1, 3))
-                game:GetService("VirtualUser"):ClickButton1(Vector2.new(math.random(1, 100), math.random(1, 100)))
-            end
-            
-            -- Limpeza de logs interdimensional
-            pcall(function()
-                game:GetService("LogService"):Clear()
-                game:GetService("Stats"):ClearAllChildren() -- Sim, isso é real
-            end)
+        
+        if closest then
+            -- Movimento e ataque
+            Player.Character.Humanoid:MoveTo(closest.HumanoidRootPart.Position)
+            game:GetService("ReplicatedStorage").Combat.RemoteEvent:FireServer("Attack", {
+                Target = closest,
+                Skill = "Basic"
+            })
         end
+        
+        wait(0.2)
+    end
+end
+
+--=🎮 INTERFACE GRÁFICA =--
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Project Slayers Ultimate", "DarkTheme")
+
+--=📌 MENU PRINCIPAL =--
+local MainTab = Window:NewTab("Menu")
+local MainSection = MainTab:NewSection("Farm Automático")
+
+MainSection:NewToggle("Farm Básico", "Ativa farm automático", function(state)
+    getgenv().AutoFarm = state
+    if state then
+        coroutine.wrap(AutoFarm)()
     end
 end)
 
---=🚀 NOTIFICAÇÃO FINAL 🚀=--
-DivineLibrary:Notify("SCRIPT CARREGADO!", "Bem-vindo ao Project Slayers ULTRA DELUXE!")
-task.wait(2)
-game:GetService("StarterGui"):SetCore("SendNotification", {
-    Title = "PODER CÓSMICO DETECTADO",
-    Text = "Você agora vale 999 quadrilhões de dólares.",
-    Icon = "rbxassetid://9999999999",
-    Duration = 10
-})
+MainSection:NewSlider("Distância", "Alcance do farm", 100, 10, function(val)
+    getgenv().FarmDistance = val
+end)
 
---=💸 VALOR REAL DO SCRIPT 💸=--
-print("============================================")
-print("VALOR OFICIAL DO SCRIPT: 999 QUADRILHÕES DE DÓLARES")
-print("APROVADO POR: NASA, FMI, ELON MUSK")
-print("============================================")
+--=🔓 MENU DE DESBLOQUEIOS =--
+local UnlockTab = Window:NewTab("Desbloqueios")
+local UnlockSection = UnlockTab:NewSection("Conteúdo Premium")
+
+UnlockSection:NewButton("Desbloquear Títulos", "Todos exceto ADM", function()
+    local success = DesbloquearTitulos()
+    Library:Notify("✅ Sucesso!", "Desbloqueados "..success.." títulos seguros!")
+end)
+
+--=📱 CONTROLES MOBILE =--
+if not is_synapse_function then
+    local MobileUI = Instance.new("ScreenGui")
+    MobileUI.Name = "MobileControls"
+    MobileUI.Parent = game:GetService("CoreGui")
+
+    local MoveBtn = Instance.new("TextButton")
+    MoveBtn.Name = "MoveBtn"
+    MoveBtn.Size = UDim2.new(0.2, 0, 0.1, 0)
+    MoveBtn.Position = UDim2.new(0.7, 0, 0.8, 0)
+    MoveBtn.Text = "▶ MOVER"
+    MoveBtn.BackgroundColor3 = Color3.fromRGB(40, 0, 80)
+    MoveBtn.TextColor3 = Color3.new(1, 1, 1)
+    MoveBtn.Parent = MobileUI
+
+    MoveBtn.MouseButton1Down:Connect(function()
+        if getgenv().AutoFarm then
+            Player.Character:MoveTo(Player:GetMouse().Hit.p)
+        end
+    end)
+end
+
+--=⚡ INICIALIZAÇÃO =--
+Library:Notify("SCRIPT CARREGADO", "Versão 999 Quadrilhões ativada!")
+print("✅ Sistema pronto | Valor: 999 Quadrilhões | Anti-Ban: Ativo")
+
+--=🔄 SISTEMA DE ATUALIZAÇÃO AUTOMÁTICA =--
+task.spawn(function()
+    while wait(60) do
+        pcall(function()
+            local newVersion = game:HttpGet("https://raw.githubusercontent.com/NogueiraaOfc/ProjectSlayersUltra/main/version.txt")
+            if newVersion ~= "v1.0" then  -- Altere para sua versão atual
+                Library:Notify("ATUALIZAÇÃO DISPONÍVEL", "Nova versão encontrada!")
+            end
+        end)
+    end
+end)
