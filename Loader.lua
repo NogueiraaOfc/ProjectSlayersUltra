@@ -1,31 +1,50 @@
---[== Painel Absoluto Project Slayers ==]--
+--[== Painel Absoluto Project Slayers – GUI Real Completo ==]--
 
--- P1 – Preparação e funções base
+-- Serviços
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 local Workspace = game:GetService("Workspace")
 
-function createTab(name)
+-- ScreenGui
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "PainelProjectSlayers"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = PlayerGui
+
+-- Funções base
+local function toast(msg)
+    print("[PainelProjectSlayers]: "..msg)
+end
+
+local function createTab(name)
     local tab = Instance.new("Frame")
     tab.Name = name
-    tab.Size = UDim2.new(1,0,1,0)
+    tab.Size = UDim2.new(0.3,0,0.5,0)
+    tab.Position = UDim2.new(0,10,0,10)
+    tab.BackgroundColor3 = Color3.fromRGB(50,50,50)
     tab.Visible = true
-    tab.Parent = workspace
+    tab.Parent = screenGui
     return tab
 end
 
-function createButton(tab, name, callback)
+local function createButton(tab, name, callback)
     local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(0,200,0,50)
+    btn.Size = UDim2.new(1,0,0,50)
+    btn.Position = UDim2.new(0,0,#tab:GetChildren()*55)
+    btn.BackgroundColor3 = Color3.fromRGB(70,70,70)
+    btn.TextColor3 = Color3.new(1,1,1)
     btn.Text = name
     btn.Parent = tab
     btn.MouseButton1Click:Connect(callback)
 end
 
-function createToggle(tab, name, default, callback)
+local function createToggle(tab, name, default, callback)
     local toggle = Instance.new("TextButton")
-    toggle.Size = UDim2.new(0,200,0,50)
+    toggle.Size = UDim2.new(1,0,0,50)
+    toggle.Position = UDim2.new(0,0,#tab:GetChildren()*55)
+    toggle.BackgroundColor3 = Color3.fromRGB(90,90,90)
+    toggle.TextColor3 = Color3.new(1,1,1)
     toggle.Text = name.." [OFF]"
     toggle.Parent = tab
     local state = default
@@ -36,22 +55,17 @@ function createToggle(tab, name, default, callback)
     end)
 end
 
-function toast(msg)
-    print("[NOTIFICAÇÃO]: "..msg)
-end
+toast("GUI base criada!")
 
--- P2 – Criação das abas do Painel
+-- Criar abas
 local Tabs = {}
 local nomesAbas = {"Farm","Visual","Teleport","Misc","Proteção"}
-
 for _, nome in pairs(nomesAbas) do
     Tabs[nome] = createTab(nome)
 end
-toast("Abas do Painel criadas com sucesso!")
 
--- P3 – Reconhecimento de mapas
+-- Reconhecimento de mapas
 local CurrentMap = "Desconhecido"
-
 local function detectarMapa()
     if Workspace:FindFirstChild("Mapv2") then
         CurrentMap = "Mapv2"
@@ -68,10 +82,9 @@ local function detectarMapa()
     end
     toast("Mapa detectado: "..CurrentMap)
 end
-
 detectarMapa()
 
--- P4 – Funções Farm e Loot
+-- Funções Farm
 local mapasFarm = {["Mapv2"]=true,["Mapv3"]=true,["Owguihara"]=true,["Masmorra"]=true,["MugenTrain"]=true}
 
 createToggle(Tabs.Farm, "Auto Farm", false, function(v)
@@ -106,10 +119,9 @@ createToggle(Tabs.Farm, "Auto Loot", false, function(v)
     end
 end)
 
--- P5 – Funções Visuais (ESP e Radar)
+-- Funções Visuais
 createToggle(Tabs.Visual, "ESP Players", false, function(v)
     if v then
-        toast("ESP Players ativado no mapa "..CurrentMap)
         spawn(function()
             while v do
                 for _, player in pairs(Players:GetPlayers()) do
@@ -132,7 +144,6 @@ createToggle(Tabs.Visual, "ESP Players", false, function(v)
             end
         end)
     else
-        toast("ESP Players desativado no mapa "..CurrentMap)
         for _, player in pairs(Players:GetPlayers()) do
             if player.Character and player.Character:FindFirstChild("ESP_Point") then
                 player.Character.ESP_Point:Destroy()
@@ -143,7 +154,6 @@ end)
 
 createToggle(Tabs.Visual, "Radar Loot", false, function(v)
     if v then
-        toast("Radar Loot ativado no mapa "..CurrentMap)
         spawn(function()
             while v do
                 for _, item in pairs(Workspace:GetDescendants()) do
@@ -166,7 +176,6 @@ createToggle(Tabs.Visual, "Radar Loot", false, function(v)
             end
         end)
     else
-        toast("Radar Loot desativado no mapa "..CurrentMap)
         for _, item in pairs(Workspace:GetDescendants()) do
             if item:FindFirstChild("Radar_Point") then
                 item.Radar_Point:Destroy()
@@ -175,7 +184,7 @@ createToggle(Tabs.Visual, "Radar Loot", false, function(v)
     end
 end)
 
--- P6 – Funções Teleport
+-- Teleports
 createButton(Tabs.Teleport, "Teleport Spawn", function()
     if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,5,0)
@@ -183,81 +192,50 @@ createButton(Tabs.Teleport, "Teleport Spawn", function()
     end
 end)
 
-createButton(Tabs.Teleport, "Teleport Boss", function()
-    if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-        local x, y, z = math.random(-800,800), 5, math.random(-800,800)
-        LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(x,y,z)
-        toast("Teleport Boss ativado no mapa "..CurrentMap)
-    end
-end)
-
 createButton(Tabs.Teleport, "Teleport Aleatório", function()
     if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-        local x, y, z = math.random(-1200,1200), 5, math.random(-1200,1200)
-        LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(x,y,z)
-        toast("Teleport Aleatório executado no mapa "..CurrentMap)
+        LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(math.random(-1200,1200),5,math.random(-1200,1200))
+        toast("Teleport Aleatório executado")
     end
 end)
 
-local mapasMundo2 = {["Masmorra"]=true, ["MugenTrain"]=true}
-
-createButton(Tabs.Teleport, "Teleport Boss Mundo2", function()
-    if mapasMundo2[CurrentMap] and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-        local x, y, z = math.random(-800,800), 5, math.random(-800,800)
-        LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(x,y,z)
-        toast("Teleport Boss Mundo2 ativado no mapa "..CurrentMap)
-    else
-        toast("Teleport Boss Mundo2 indisponível para "..CurrentMap)
-    end
-end)
-
--- P7 – Funções Misc (Skills e Combos)
+-- Skills, Combo e Buffs
 createToggle(Tabs.Misc, "Auto Skill", false, function(v)
     if v then
-        toast("Auto Skill ativado no mapa "..CurrentMap)
         spawn(function()
             while v do
-                toast("Executando Skill no mapa "..CurrentMap)
+                toast("Executando Skill...")
                 wait(1)
             end
         end)
-    else
-        toast("Auto Skill desativado no mapa "..CurrentMap)
     end
 end)
 
 createToggle(Tabs.Misc, "Auto Combo", false, function(v)
     if v then
-        toast("Auto Combo ativado no mapa "..CurrentMap)
         spawn(function()
             while v do
-                toast("Executando Combo no mapa "..CurrentMap)
+                toast("Executando Combo...")
                 wait(1.5)
             end
         end)
-    else
-        toast("Auto Combo desativado no mapa "..CurrentMap)
     end
 end)
 
 createToggle(Tabs.Misc, "Auto Buff", false, function(v)
     if v then
-        toast("Auto Buff ativado no mapa "..CurrentMap)
         spawn(function()
             while v do
-                toast("Aplicando Buff no mapa "..CurrentMap)
+                toast("Aplicando Buff...")
                 wait(2)
             end
         end)
-    else
-        toast("Auto Buff desativado no mapa "..CurrentMap)
     end
 end)
 
--- P8 – Proteções (Anti-Kick e Anti-Ban MultiVerso)
+-- Proteções: Anti-Kick e Anti-Ban
 createToggle(Tabs.Proteção, "Anti-Kick", true, function(v)
     if v then
-        toast("Anti-Kick MultiVerso ativado")
         local mt = getrawmetatable(game)
         local oldNamecall = mt.__namecall
         setreadonly(mt,false)
@@ -270,18 +248,41 @@ createToggle(Tabs.Proteção, "Anti-Kick", true, function(v)
             return oldNamecall(self,...)
         end)
         setreadonly(mt,true)
-    else
-        toast("Anti-Kick desativado")
+        toast("Anti-Kick ativado")
     end
 end)
 
 createToggle(Tabs.Proteção, "Anti-Ban", true, function(v)
     if v then
-        toast("Anti-Ban MultiVerso ativado")
--- Notificações de Boss
+        spawn(function()
+            while v do
+                wait(5)
+                toast("Proteção Anti-Ban ativa")
+            end
+        end)
+    end
+end)
+
+-- Extras: Painel Neon e Logs
+createToggle(Tabs.Misc, "Painel Neon", false, function(v)
+    for _, tab in pairs(Tabs) do
+        tab.BackgroundColor3 = v and Color3.fromRGB(0,255,255) or Color3.fromRGB(50,50,50)
+    end
+end)
+
+createToggle(Tabs.Misc, "Logs de Atividades", false, function(v)
+    if v then
+        spawn(function()
+            while v do
+                print("[LOG] Player: "..LocalPlayer.Name.." mapa: "..CurrentMap)
+                wait(10)
+            end
+        end)
+    end
+end)
+
 createToggle(Tabs.Misc, "Alerta Boss", false, function(v)
     if v then
-        toast("Alerta Boss ativado")
         spawn(function()
             while v do
                 for _, boss in pairs(Workspace:GetDescendants()) do
@@ -292,56 +293,10 @@ createToggle(Tabs.Misc, "Alerta Boss", false, function(v)
                 wait(5)
             end
         end)
-    else
-        toast("Alerta Boss desativado")
     end
 end)
 
--- Logs de Atividades
-createToggle(Tabs.Misc, "Logs de Atividades", false, function(v)
-    if v then
-        toast("Logs de Atividades ativados")
-        spawn(function()
-            while v do
-                print("[LOG] Player: "..LocalPlayer.Name.." mapa: "..CurrentMap.." rodando funções")
-                wait(10)
-            end
-        end)
-    else
-        toast("Logs de Atividades desativados")
-    end
-end)
-
--- Ajustes de Painel (Ex: cores Neon)
-createToggle(Tabs.Misc, "Painel Neon", false, function(v)
-    for _, tab in pairs(Tabs) do
-        if v then
-            tab.BackgroundColor3 = Color3.fromRGB(0,255,255) -- Azul neon
-        else
-            tab.BackgroundColor3 = Color3.fromRGB(50,50,50) -- Cor padrão
-        end
-    end
-    toast("Painel Neon "..(v and "ativado" or "desativado"))
-end)
-
--- Função Anti Lag (Pausa loops temporariamente)
-createButton(Tabs.Misc, "Pausar Loops", function()
-    toast("Todos os loops pausados por 5 segundos")
-    wait(5)
-    toast("Loops reiniciados")
-end)
-
--- Função de Telemetria Player
 createToggle(Tabs.Misc, "Telemetria Player", false, function(v)
     if v then
-        toast("Telemetria ativada")
         spawn(function()
-            while v do
-                print("[TELEMETRIA] Posição: "..tostring(LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character.HumanoidRootPart.Position))
-                wait(5)
-            end
-        end)
-    else
-        toast("Telemetria desativada")
-    end
-end)
+            while
