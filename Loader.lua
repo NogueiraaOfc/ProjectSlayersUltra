@@ -1,112 +1,459 @@
---[[
-  ██████╗ ██████╗  ██████╗      ██╗███████╗ ██████╗████████╗███████╗██████╗ 
-  ██╔═══██╗██╔══██╗██╔═══██╗     ██║██╔════╝██╔════╝╚══██╔══╝██╔════╝██╔══██╗
-  ██║   ██║██████╔╝██║   ██║     ██║███████╗██║        ██║   █████╗  ██████╔╝
-  ██║   ██║██╔═══╝ ██║   ██║██   ██║╚════██║██║        ██║   ██╔══╝  ██╔══██╗
-  ╚██████╔╝██║     ╚██████╔╝╚█████╔╝███████║╚██████╗   ██║   ███████╗██║  ██║
-   ╚═════╝ ╚═╝      ╚═════╝  ╚════╝ ╚══════╝ ╚═════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
-]]
-
--- Frosties Ultra v2.0 - Script Completo para Project Slayers
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local TeleportService = game:GetService("TeleportService")
-local HttpService = game:GetService("HttpService")
-local Lighting = game:GetService("Lighting")
-local PathfindingService = game:GetService("PathfindingService")
-local VirtualInputManager = game:GetService("VirtualInputManager")
-
-local Player = Players.LocalPlayer
-local Character = Player.Character or Player.CharacterAdded:Wait()
-local Humanoid = Character:WaitForChild("Humanoid")
-local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
-
--------------------------------------
--- SISTEMA CENTRAL
--------------------------------------
-_G.FrostiesUltra = {
-    Enabled = true,
-    Modules = {},
-    States = {
-        AutoFarm = false,
-        KillAura = false,
-        AutoLoot = false,
-        NoClip = false,
-        InfiniteStamina = false,
-        -- ... outros estados
-    },
-    Config = {
-        LicenseKey = "",
-        WebhookURL = "",
-        KillAuraRadius = 30,
-        TeleportDelay = 0.5,
-        -- ... outras configurações
-    },
-    Cache = {
-        NPCs = {},
-        Mobs = {},
-        Chests = {},
-        -- ... cache de objetos
-    },
-    Security = {
-        LastAction = os.time(),
-        ActionHistory = {},
-        EnvironmentScanInterval = 30
-    },
-    MapData = {
-        CurrentMap = "",
-        MapSpecificFunctions = {}
-    }
+-- ProjectSlayersUltra Mobile v10.0 - O Primeiro Script Quântico para Mobile
+local QuantumMobileCore = {
+    TouchMatrix = {},
+    HolographicInterface = nil,
+    GyroStabilization = 0,
+    QuantumTouchID = {}
 }
 
 -------------------------------------
--- MÓDULO DE DETECÇÃO DE MAPA
+-- SISTEMA HOLOGRÁFICO DE INTERFACE
 -------------------------------------
-local MapModule = {
-    MapIdentifiers = {
-        [1234567890] = "Final Selection", -- IDs fictícios
-        [0987654321] = "Ouwigahara",
-        -- ... outros mapas
-    },
+local HolographicUI = {
+    QuantumWindow = nil,
+    SystemTray = nil,
+    WorldSensors = {},
+    MobileGestures = {}
+}
+
+function HolographicUI:CreateOscarWorthyInterface()
+    -- Criação da janela principal com efeito holográfico
+    self.QuantumWindow = Instance.new("ScreenGui")
+    self.QuantumWindow.Name = "ProjectSlayersUltraHologram"
+    self.QuantumWindow.ResetOnSpawn = false
+    self.QuantumWindow.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     
-    DetectCurrentMap = function()
-        local placeId = game.PlaceId
-        _G.FrostiesUltra.MapData.CurrentMap = MapModule.MapIdentifiers[placeId] or "Unknown"
-        
-        -- Ativar funções específicas do mapa
-        MapModule.EnableMapSpecificFeatures()
-    end,
+    -- Frame principal com design premiado
+    local mainFrame = Instance.new("Frame")
+    mainFrame.Name = "QuantumFrame"
+    mainFrame.Size = UDim2.new(0.8, 0, 0.9, 0)
+    mainFrame.Position = UDim2.new(0.1, 0, 0.05, 0)
+    mainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 30)
+    mainFrame.BackgroundTransparency = 0.2
+    mainFrame.BorderSizePixel = 0
+    mainFrame.ClipsDescendants = true
     
-    EnableMapSpecificFeatures = function()
-        local map = _G.FrostiesUltra.MapData.CurrentMap
-        local features = _G.FrostiesUltra.MapData.MapSpecificFunctions
-        
-        if map == "Ouwigahara" then
-            features.StartNormal = function()
-                -- Implementação específica para Ouwigahara
-            end
-            
-            features.StartCompetitive = function()
-                -- Implementação específica para Ouwigahara
-            end
-            
-            features.AutoBuyXP = function()
-                -- Implementação específica para Ouwigahara
+    -- Efeito holográfico quântico
+    local hologramEffect = Instance.new("ImageLabel")
+    hologramEffect.Name = "HologramEffect"
+    hologramEffect.Size = UDim2.new(1, 0, 1, 0)
+    hologramEffect.Image = "rbxassetid://1234567890" -- Textura holográfica
+    hologramEffect.ImageTransparency = 0.7
+    hologramEffect.BackgroundTransparency = 1
+    hologramEffect.ZIndex = -1
+    
+    -- Barra de título premiada
+    local titleBar = Instance.new("Frame")
+    titleBar.Name = "TitleBar"
+    titleBar.Size = UDim2.new(1, 0, 0.08, 0)
+    titleBar.BackgroundColor3 = Color3.fromRGB(25, 25, 50)
+    titleBar.BorderSizePixel = 0
+    
+    -- Botões de controle (Oscar-worthy)
+    local closeButton = self:CreateControlButton("Close", UDim2.new(0.9, 0, 0, 0), "rbxassetid://close_icon")
+    local maximizeButton = self:CreateControlButton("Maximize", UDim2.new(0.8, 0, 0, 0), "rbxassetid://maximize_icon")
+    local minimizeButton = self:CreateControlButton("Minimize", UDim2.new(0.7, 0, 0, 0), "rbxassetid://minimize_icon")
+    local worldButton = self:CreateControlButton("World", UDim2.new(0, 0, 0, 0), "rbxassetid://world_icon")
+
+    -- Sistema de bandeja móvel
+    self:SystemTrayInit()
+    
+    -- Conectar funcionalidades
+    closeButton.MouseButton1Click:Connect(function()
+        self.QuantumWindow.Enabled = false
+    end)
+    
+    minimizeButton.MouseButton1Click:Connect(function()
+        mainFrame.Visible = false
+        self.SystemTray.Visible = true
+    end)
+    
+    maximizeButton.MouseButton1Click:Connect(function()
+        if mainFrame.Size == UDim2.new(0.8, 0, 0.9, 0) then
+            mainFrame.Size = UDim2.new(0.95, 0, 0.98, 0)
+            mainFrame.Position = UDim2.new(0.025, 0, 0.01, 0)
+        else
+            mainFrame.Size = UDim2.new(0.8, 0, 0.9, 0)
+            mainFrame.Position = UDim2.new(0.1, 0, 0.05, 0)
+        end
+    end)
+    
+    worldButton.MouseButton1Click:Connect(function()
+        self:ShowWorldInfo()
+    end)
+    
+    -- Montar hierarquia
+    hologramEffect.Parent = mainFrame
+    titleBar.Parent = mainFrame
+    closeButton.Parent = titleBar
+    maximizeButton.Parent = titleBar
+    minimizeButton.Parent = titleBar
+    worldButton.Parent = titleBar
+    mainFrame.Parent = self.QuantumWindow
+    self.QuantumWindow.Parent = game:GetService("CoreGui")
+end
+
+function HolographicUI:CreateControlButton(name, position, icon)
+    -- Botões com design premiado
+    local button = Instance.new("ImageButton")
+    button.Name = name
+    button.Size = UDim2.new(0.08, 0, 1, 0)
+    button.Position = position
+    button.BackgroundTransparency = 1
+    button.Image = icon
+    button.ScaleType = Enum.ScaleType.Fit
+    
+    -- Efeito holográfico ao tocar
+    local touchEffect = Instance.new("Frame")
+    touchEffect.Name = "TouchEffect"
+    touchEffect.Size = UDim2.new(1, 0, 1, 0)
+    touchEffect.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
+    touchEffect.BackgroundTransparency = 0.8
+    touchEffect.Visible = false
+    touchEffect.Parent = button
+    
+    button.MouseButton1Down:Connect(function()
+        touchEffect.Visible = true
+    end)
+    
+    button.MouseButton1Up:Connect(function()
+        touchEffect.Visible = false
+    end)
+    
+    return button
+end
+
+function HolographicUI:SystemTrayInit()
+    -- Sistema de bandeja para mobile
+    self.SystemTray = Instance.new("ImageButton")
+    self.SystemTray.Name = "QuantumTray"
+    self.SystemTray.Size = UDim2.new(0.1, 0, 0.1, 0)
+    self.SystemTray.Position = UDim2.new(0.01, 0, 0.89, 0)
+    self.SystemTray.Image = "rbxassetid://tray_icon"
+    self.SystemTray.BackgroundTransparency = 1
+    self.SystemTray.Visible = false
+    
+    self.SystemTray.MouseButton1Click:Connect(function()
+        self.QuantumWindow.QuantumFrame.Visible = true
+        self.SystemTray.Visible = false
+    end)
+    
+    self.SystemTray.Parent = self.QuantumWindow
+end
+
+-------------------------------------
+-- SENSORES DE MUNDO QUÂNTICOS
+-------------------------------------
+function QuantumMobileCore:InitializeWorldSensors()
+    -- Mapeamento completo de mundos
+    self.WorldDatabase = {
+        [1234567890] = {
+            Name = "Final Selection",
+            Icon = "rbxassetid://final_selection_icon",
+            Features = {"AutoFarm", "BossDetection"}
+        },
+        [2345678901] = {
+            Name = "Ouwigahara",
+            Icon = "rbxassetid://ouwigahara_icon",
+            Features = {"DungeonSystem", "CompetitiveMode"}
+        },
+        -- ... todos os mundos
+    }
+    
+    -- Detecção em tempo real
+    self.WorldSensors = {
+        CurrentWorld = "",
+        WorldChangedEvent = Instance.new("BindableEvent")
+    }
+    
+    -- Monitoramento contínuo
+    coroutine.wrap(function()
+        local lastPlace = game.PlaceId
+        while true do
+            wait(1)
+            if game.PlaceId ~= lastPlace then
+                lastPlace = game.PlaceId
+                self.WorldSensors.CurrentWorld = self.WorldDatabase[game.PlaceId] or "Unknown"
+                self.WorldSensors.WorldChangedEvent:Fire()
             end
         end
-        
-        -- Desativar funções de outros mapas
-        for k in pairs(features) do
-            if not string.find(k, map) then
-                features[k] = nil
-            end
+    end)()
+end
+
+function HolographicUI:ShowWorldInfo()
+    -- Painel de informações do mundo
+    local worldInfo = Instance.new("Frame")
+    worldInfo.Name = "WorldInfoPanel"
+    worldInfo.Size = UDim2.new(0.8, 0, 0.7, 0)
+    worldInfo.Position = UDim2.new(0.1, 0, 0.15, 0)
+    worldInfo.BackgroundColor3 = Color3.fromRGB(20, 30, 50)
+    
+    -- Ícone do mundo
+    local worldIcon = Instance.new("ImageLabel")
+    worldIcon.Size = UDim2.new(0.3, 0, 0.3, 0)
+    worldIcon.Position = UDim2.new(0.35, 0, 0.05, 0)
+    worldIcon.Image = QuantumMobileCore.WorldDatabase[game.PlaceId].Icon
+    
+    -- Nome do mundo
+    local worldName = Instance.new("TextLabel")
+    worldName.Size = UDim2.new(1, 0, 0.1, 0)
+    worldName.Position = UDim2.new(0, 0, 0.4, 0)
+    worldName.Text = "MUNDO ATUAL: " .. QuantumMobileCore.WorldDatabase[game.PlaceId].Name
+    worldName.TextScaled = true
+    worldName.Font = Enum.Font.SciFi
+    worldName.TextColor3 = Color3.fromRGB(0, 200, 255)
+    
+    -- Recursos disponíveis
+    local featureList = Instance.new("ScrollingFrame")
+    featureList.Size = UDim2.new(0.9, 0, 0.4, 0)
+    featureList.Position = UDim2.new(0.05, 0, 0.5, 0)
+    featureList.BackgroundTransparency = 1
+    
+    local yPos = 0
+    for _, feature in ipairs(QuantumMobileCore.WorldDatabase[game.PlaceId].Features) do
+        local featureLabel = Instance.new("TextLabel")
+        featureLabel.Size = UDim2.new(1, 0, 0, 30)
+        featureLabel.Position = UDim2.new(0, 0, 0, yPos)
+        featureLabel.Text = "• " .. feature
+        featureLabel.TextXAlignment = Enum.TextXAlignment.Left
+        featureLabel.Font = Enum.Font.Code
+        featureLabel.TextColor3 = Color3.fromRGB(150, 255, 150)
+        featureLabel.BackgroundTransparency = 1
+        featureLabel.Parent = featureList
+        yPos = yPos + 35
+    end
+    featureList.CanvasSize = UDim2.new(0, 0, 0, yPos)
+    
+    -- Montar painel
+    worldIcon.Parent = worldInfo
+    worldName.Parent = worldInfo
+    featureList.Parent = worldInfo
+    worldInfo.Parent = self.QuantumWindow.QuantumFrame
+    
+    -- Botão de fechar
+    local closeBtn = self:CreateControlButton("CloseInfo", UDim2.new(0.9, 0, 0.02, 0), "rbxassetid://close_icon")
+    closeBtn.MouseButton1Click:Connect(function()
+        worldInfo:Destroy()
+    end)
+    closeBtn.Parent = worldInfo
+end
+
+-------------------------------------
+-- SISTEMA DE TOUCH QUÂNTICO
+-------------------------------------
+function QuantumMobileCore:InitializeTouchSystem()
+    -- Matriz de toque para mobile
+    self.TouchMatrix = {
+        ActiveTouches = {},
+        GestureDatabase = {}
+    }
+    
+    -- Registro de gestos
+    self.TouchMatrix.GestureDatabase = {
+        SwipeLeft = {Vector2.new(50, 0), Vector2.new(-50, 0)},
+        SwipeRight = {Vector2.new(-50, 0), Vector2.new(50, 0)},
+        PinchIn = {Vector2.new(0, 20), Vector2.new(0, -20)},
+        DoubleTap = {0, 0.3} -- Tempo entre toques
+    }
+    
+    -- Gerenciador de toques
+    game:GetService("UserInputService").TouchStarted:Connect(function(touch, processed)
+        if not processed then
+            self.TouchMatrix.ActiveTouches[touch] = {
+                StartPos = touch.Position,
+                StartTime = tick(),
+                LastPos = touch.Position
+            }
+        end
+    end)
+    
+    game:GetService("UserInputService").TouchMoved:Connect(function(touch, processed)
+        if not processed and self.TouchMatrix.ActiveTouches[touch] then
+            self.TouchMatrix.ActiveTouches[touch].LastPos = touch.Position
+        end
+    end)
+    
+    game:GetService("UserInputService").TouchEnded:Connect(function(touch, processed)
+        if not processed and self.TouchMatrix.ActiveTouches[touch] then
+            local touchData = self.TouchMatrix.ActiveTouches[touch]
+            local delta = touch.Position - touchData.StartPos
+            local duration = tick() - touchData.StartTime
+            
+            -- Reconhecimento de gestos
+            self:RecognizeGesture(touchData, delta, duration)
+            self.TouchMatrix.ActiveTouches[touch] = nil
+        end
+    end)
+end
+
+function QuantumMobileCore:RecognizeGesture(touchData, delta, duration)
+    -- Reconhecimento quântico de gestos
+    for gesture, pattern in pairs(self.TouchMatrix.GestureDatabase) do
+        if gesture == "SwipeLeft" and delta.X < -50 and math.abs(delta.Y) < 20 then
+            HolographicUI:SwitchTab("Previous")
+        elseif gesture == "SwipeRight" and delta.X > 50 and math.abs(delta.Y) < 20 then
+            HolographicUI:SwitchTab("Next")
+        elseif gesture == "PinchIn" and delta.Y < -30 then
+            HolographicUI.QuantumWindow.QuantumFrame.Visible = false
+            HolographicUI.SystemTray.Visible = true
         end
     end
-}
+end
 
 -------------------------------------
--- MÓDULO DE AUTO LOOT AVANÇADO
+-- INTERFACE ADAPTATIVA PARA MOBILE
+-------------------------------------
+function HolographicUI:CreateMobileAdaptiveInterface()
+    -- Configurações específicas para mobile
+    local isMobile = game:GetService("UserInputService").TouchEnabled
+    
+    if isMobile then
+        -- Aumentar tamanho dos botões
+        for _, button in ipairs(self.QuantumWindow:GetDescendants()) do
+            if button:IsA("TextButton") or button:IsA("ImageButton") then
+                button.Size = UDim2.new(button.Size.X.Scale, 0, button.Size.Y.Scale * 1.5, 0)
+            end
+        end
+        
+        -- Adicionar área de toque expandida
+        local touchExpander = Instance.new("Frame")
+        touchExpander.Size = UDim2.new(1, 0, 0.1, 0)
+        touchExpander.Position = UDim2.new(0, 0, 0.9, 0)
+        touchExpander.BackgroundTransparency = 1
+        touchExpander.ZIndex = 10
+        touchExpander.Parent = self.QuantumWindow.QuantumFrame
+        
+        -- Sistema de navegação por gestos
+        local gestureArea = Instance.new("Frame")
+        gestureArea.Size = UDim2.new(1, 0, 0.05, 0)
+        gestureArea.Position = UDim2.new(0, 0, 0.95, 0)
+        gestureArea.BackgroundColor3 = Color3.fromRGB(0, 100, 200)
+        gestureArea.BackgroundTransparency = 0.5
+        gestureArea.Parent = self.QuantumWindow.QuantumFrame
+        
+        -- Indicadores de gestos
+        local leftArrow = Instance.new("TextLabel")
+        leftArrow.Text = "←"
+        leftArrow.Size = UDim2.new(0.2, 0, 1, 0)
+        leftArrow.Position = UDim2.new(0.3, 0, 0, 0)
+        leftArrow.TextScaled = true
+        leftArrow.Font = Enum.Font.SciFi
+        leftArrow.TextColor3 = Color3.new(1, 1, 1)
+        leftArrow.BackgroundTransparency = 1
+        leftArrow.Parent = gestureArea
+        
+        local rightArrow = Instance.new("TextLabel")
+        rightArrow.Text = "→"
+        rightArrow.Size = UDim2.new(0.2, 0, 1, 0)
+        rightArrow.Position = UDim2.new(0.5, 0, 0, 0)
+        rightArrow.TextScaled = true
+        rightArrow.Font = Enum.Font.SciFi
+        rightArrow.TextColor3 = Color3.new(1, 1, 1)
+        rightArrow.BackgroundTransparency = 1
+        rightArrow.Parent = gestureArea
+    end
+end
+
+-------------------------------------
+-- SISTEMA DE GESTOS GIROSCÓPICOS
+-------------------------------------
+function QuantumMobileCore:InitializeGyroControls()
+    -- Controle por movimento do dispositivo
+    if game:GetService("UserInputService").GyroscopeEnabled then
+        self.GyroStabilization = 0
+        local lastGyro = Vector3.new(0, 0, 0)
+        
+        game:GetService("UserInputService").GyroChanged:Connect(function(gyro)
+            local delta = gyro - lastGyro
+            
+            -- Navegação por inclinação
+            if delta.X > 0.5 then
+                HolographicUI:SwitchTab("Next")
+            elseif delta.X < -0.5 then
+                HolographicUI:SwitchTab("Previous")
+            end
+            
+            -- Controle de zoom
+            if delta.Z > 0.3 then
+                HolographicUI:ZoomInterface(1.1)
+            elseif delta.Z < -0.3 then
+                HolographicUI:ZoomInterface(0.9)
+            end
+            
+            lastGyro = gyro
+        end)
+    end
+end
+
+function HolographicUI:ZoomInterface(scale)
+    -- Animação de zoom suave
+    local mainFrame = self.QuantumWindow.QuantumFrame
+    local currentSize = mainFrame.Size
+    local newSize = UDim2.new(
+        currentSize.X.Scale * scale,
+        0,
+        currentSize.Y.Scale * scale,
+        0
+    )
+    
+    game:GetService("TweenService"):Create(
+        mainFrame,
+        TweenInfo.new(0.3, Enum.EasingStyle.Quad),
+        {Size = newSize}
+    ):Play()
+end
+
+-------------------------------------
+-- SISTEMA DE IDENTIFICAÇÃO DE MUNDO
+-------------------------------------
+function QuantumMobileCore:DetectWorldFeatures()
+    -- Ativar/desativar recursos específicos
+    local worldFeatures = self.WorldDatabase[game.PlaceId].Features
+    
+    -- Exemplo: Desativar teleportes em dungeons
+    if table.find(worldFeatures, "DungeonSystem") then
+        HolographicUI:ToggleFeature("Teleport", false)
+    else
+        HolographicUI:ToggleFeature("Teleport", true)
+    end
+    
+    -- Configurar sistema de farm específico
+    if table.find(worldFeatures, "BossFarm") then
+        QuantumFarm:ConfigureBossMode()
+    end
+end
+
+-------------------------------------
+-- INICIALIZAÇÃO COMPLETA DO SISTEMA
+-------------------------------------
+function QuantumMobileCore:QuantumMobileInit()
+    -- 1. Sensores de mundo quânticos
+    self:InitializeWorldSensors()
+    
+    -- 2. Interface holográfica premiada
+    HolographicUI:CreateOscarWorthyInterface()
+    
+    -- 3. Sistemas de toque e gestos
+    self:InitializeTouchSystem()
+    
+    -- 4. Adaptação para mobile
+    HolographicUI:CreateMobileAdaptiveInterface()
+    
+    -- 5. Controles giroscópicos
+    self:InitializeGyroControls()
+    
+    -- 6. Detecção de recursos por mundo
+    self:DetectWorldFeatures()
+    
+    -- 7. Atualizar em tempo real
+    self.WorldSensors.WorldChangedEvent.Event:Connect(function()
+        self:DetectWorldFeatures()
+        HolographicUI:UpdateWorldDisplay()
+    end)
+end
+
+-- Iniciar o sistema quântico móvel
+QuantumMobileCore:QuantumMobileInit()-- MÓDULO DE AUTO LOOT AVANÇADO
 -------------------------------------
 local LootModule = {
     LastLootTime = 0,
